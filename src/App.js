@@ -1,76 +1,44 @@
 import { useState } from "react";
+const App = () => {
+  const [palette, setPalette] = useState([
+    "255,255,255",
+    "255,255,255",
+    "255,255,255",
+  ]);
 
-const App = function () {
-  return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-around",
-        flexWrap: "wrap",
-        rowGap: "5rem",
-        height: "95vh",
-        alignItems: "center",
-        background: "rgb(210,153,127)",
-        borderRadius: "1rem",
-        overflow: "scroll",
-      }}
-    >
-      <Sect />
-      <Sect />
-      <Sect />
-    </div>
-  );
-};
+  const handleBackgroundColorChange = () => {
+    setPalette(
+      palette.map(() => {
+        const r = Math.floor(Math.random() * 255);
+        const g = Math.floor(Math.random() * 255);
+        const b = Math.floor(Math.random() * 255);
 
-const Sect = function () {
-  const [backgroundColor, setbackgroundColor] = useState("255, 255, 225");
-
-  const red = Math.floor(Math.random() * 255);
-  const green = Math.floor(Math.random() * 255);
-  const blue = Math.floor(Math.random() * 255);
-
-  const [Text, setText] = useState(`rgb(${backgroundColor})`);
-  const handleClick = () => {
-    setbackgroundColor(`${red}, ${green},  ${blue}`);
-    setText(`rgb(${red} ${green}, ${blue})`);
+        return `${r},${g},${b}`;
+      })
+    );
   };
 
   return (
-    <section
-      style={{
-        height: "200px",
-      }}
-    >
-      <ColorPallete
-        Text={Text}
-        handleClick={handleClick}
-        backgroundColor={backgroundColor}
-      />
+    <section className=" h-screen w-full flex items-center justify-center bg-black gap-5 flex-wrap">
+      {palette.map((color, index) => (
+        <Palette
+          key={index}
+          color={color}
+          onChange={handleBackgroundColorChange}
+        />
+      ))}
     </section>
   );
 };
 
-const ColorPallete = function ({ Text, handleClick, backgroundColor }) {
+const Palette = ({ color, onChange }) => {
   return (
     <div
-      style={{
-        height: "100%",
-        background: `rgb(${backgroundColor})`,
-        display: "grid",
-        placeItems: "center",
-        userSelect: "none",
-        cursor: "pointer",
-        fontSize: "10px",
-        border: "3px solid black",
-        borderRadius: "10px",
-        padding: "1rem",
-        textAlign: "center",
-        transition: "all ease-in-out .4s",
-        textTransform: "uppercase",
-      }}
-      onClick={handleClick}
+      style={{ background: `rgb(${color})` }}
+      className="w-40 h-20 border-2 rounded flex items-center cursor-pointer justify-center"
+      onClick={onChange}
     >
-      <h1>{Text}</h1>
+      <h1>{color}</h1>
     </div>
   );
 };

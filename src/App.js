@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 const App = () => {
   const [palette, setPalette] = useState([
     "255,255,255",
@@ -34,7 +35,7 @@ const App = () => {
 const Palette = ({ color, onChange }) => {
   return (
     <div
-      style={{ background: `rgb(${color})` }}
+      style={{ background: `rgb(${color})`, userSelect: "none" }}
       className="w-40 h-20 border-2 rounded flex items-center cursor-pointer justify-center"
       onClick={onChange}
     >
